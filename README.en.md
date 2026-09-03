@@ -47,7 +47,7 @@ Set `GITHUB_TOKEN` (a GitHub PAT with `repo` / `read:org` / `read:packages`), th
 
 ## Notes
 
-- The panel's "public repos" section uses a hardcoded `GITHUB_USERNAME` constant in the client (currently `ZIye1208`); change the source to target another account.
+- The panel's "public repos" section takes a GitHub username from an input on the page and remembers it in `localStorage`, so any account works without touching the source.
 - `gh_repo_stats` is not shown in the panel; call it from the chat. Use it if you want private repos or clone counts.
 
 ## License
