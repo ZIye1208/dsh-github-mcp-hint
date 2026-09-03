@@ -2,6 +2,8 @@
 
 **[English](./README.en.md) · 中文**
 
+> 也可作为 [dsh-github-mcp](https://github.com/ZIye1208/dsh-github-mcp) 的依赖被一并安装。**本面板插件可独立卸载/禁用**，不影响 GitHub MCP 功能。
+
 > 在 DSH 的「设置 → 插件 → GitHub MCP」页展示 GitHub 示例用法，并显示你的公开仓库统计；同时提供模型工具 `gh_repo_stats`，可查当前账号仓库的星数、fork 与近 14 天克隆量。
 
 ## 功能
