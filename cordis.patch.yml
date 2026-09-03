@@ -1,0 +1,4 @@
+# dsh-github-mcp-hint bundle: 挂 Node half（空 apply，行为全在 client 的槽位注册）
+- insert:
+    - id: dsh-github-mcp-hint
+      name: 'dsh-github-mcp-hint'
