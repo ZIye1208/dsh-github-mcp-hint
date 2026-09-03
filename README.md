@@ -49,7 +49,7 @@ dsh plugin --profile <profile> add github:ZIye1208/dsh-github-mcp-hint
 
 ## 说明
 
-- 面板的「公开仓库区」用的用户名是写死在客户端里的 `GITHUB_USERNAME` 常量（当前为 `ZIye1208`），改源码即可适配其它账号。
+- 面板的「公开仓库区」使用页面上的「GitHub 用户名」输入框查询公开仓库，并用 `localStorage` 记住上次输入，无需改源码即可适配其它账号。
 - `gh_repo_stats` 不在面板展示，只在对话里调用；若要含私有仓库或克隆量，用它。
 
 ## 许可
