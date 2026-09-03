@@ -1,28 +1,34 @@
 # dsh-github-mcp-hint
 
-> 在 DSH 设置页（设置 → 插件 → GitHub MCP）展示「连接 GitHub · 试试这样用」示例提示，从 30 条示例中随机展示 4 条，点击即可复制到剪贴板，方便用自然语言驱动 GitHub MCP 工具。
+> 在 DSH 的「设置 → 插件 → GitHub MCP」页展示 GitHub 示例用法，并显示你的公开仓库统计；同时提供模型工具 `gh_repo_stats`，可查当前账号仓库的星数、fork 与近 14 天克隆量。
 
 ## 功能
 
-- 在 **设置 → 插件 → 「GitHub MCP」标签页** 内展示 GitHub MCP 的示例用法（不再占用输入框上方的空间）。
-- 内置 **30 条示例**池，打开页面时**随机取 4 条**；点「换一批」可再随机 4 条。
-- 点击某条示例**复制到剪贴板**，粘到对话里即可让模型执行。
-- 依赖宿主已配置的 `@deepseek-ai/dsh-mcp-client` 接入 [GitHub 官方远程 MCP Server](https://api.githubcopilot.com/mcp/)。
+### ① 设置页「GitHub MCP」
+
+- **公开仓库区**：浏览器直连 GitHub 公开 API（无 token、最安全），显示你的**公开**仓库的 ⭐星 / 🍴fork / 语言，点击跳转仓库。GitHub 公开 API 不含私有仓库与克隆量。
+- **试试这样用**：内置 **30 条示例池**，打开时随机取 **4 条**；点「换一批」再随机 4 条；点击示例即可**复制到剪贴板**。
+
+### ② 模型工具 `gh_repo_stats`
+
+- 宿主注册的模型工具，读取 `GITHUB_TOKEN`，拉取当前账号**全部仓库（含私有）**的星数、fork 与**近 14 天克隆量**。
+- 用法：在对话里直接问「我的仓库有多少星多少下载」，模型会调用 `gh_repo_stats` 并展示。
+
+> **为什么拆成「面板公开数据 + 对话工具下载量」**：GitHub 公开 API 无需 token 就能读公开仓库的星/fork（所以面板可用、且不泄露凭证）；但**克隆/下载量必须鉴权**，而 token 只能留在 Node 宿主侧（浏览器不能持有），所以通过模型工具在宿主侧读取。
 
 ## 安装
 
 通过 DSH 插件管理器，从本仓库安装：
 
 ```sh
-# 在目标 profile 上安装（示例）
 dsh plugin --profile <profile> add github:ZIye1208/dsh-github-mcp-hint
 ```
 
-或手动：把本仓库作为本地依赖加入 profile 的 `package.json`（`link:`），并将其加入 `dsh.profile.bundles`，然后重启 DSH。
+或手动：把本仓库作为本地依赖加入 profile 的 `package.json`（`link:`），加入 `dsh.profile.bundles`，然后重启 DSH。
 
-## 前置：接入 GitHub MCP
+## 前置：接入 GitHub MCP + 设置 token
 
-本插件只是「示例提示面板」，真正执行 GitHub 操作需要 DSH 已接入 GitHub MCP。在 profile 的 `cordis.patch.yml` 加入：
+本插件的「示例」和「工具」依赖 DSH 已接入 GitHub MCP。在 profile 的 `cordis.patch.yml` 加入：
 
 ```yaml
 - insert:
@@ -37,11 +43,12 @@ dsh plugin --profile <profile> add github:ZIye1208/dsh-github-mcp-hint
         failOnStartupError: false
 ```
 
-并设置环境变量 `GITHUB_TOKEN`（GitHub PAT，需 `repo` / `read:org` / `read:packages` 权限），然后重启 DSH。接入后 GitHub 工具会以 `mcp__github__*` 形式出现（如 `mcp__github__list_pull_requests`、`mcp__github__create_pull_request`、`mcp__github__search_repositories`）。
+并设置环境变量 `GITHUB_TOKEN`（GitHub PAT，需 `repo` / `read:org` / `read:packages`），然后重启 DSH。接入后 GitHub 工具以 `mcp__github__*` 形式出现（如 `mcp__github__list_pull_requests`、`mcp__github__create_pull_request`、`mcp__github__search_repositories`）。
 
-## 示例
+## 说明
 
-随机的 4 条示例覆盖：克隆仓库、查看/创建/合并 Pull Request、列分支/提交、搜代码、建 issue、看 release、fork、协作者、复制文件等。
+- 面板的「公开仓库区」用的用户名是写死在客户端里的 `GITHUB_USERNAME` 常量（当前为 `ZIye1208`），改源码即可适配其它账号。
+- `gh_repo_stats` 不在面板展示，只在对话里调用；若要含私有仓库或克隆量，用它。
 
 ## 许可
 
