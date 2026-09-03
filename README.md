@@ -1,32 +1,36 @@
 # dsh-github-mcp-hint
 
-A DSH plugin that adds a **Settings → Plugins → GitHub MCP** page (public repo stats + example prompts) and a model tool **`gh_repo_stats`** (stars, forks and 14-day clone counts for the authenticated account).
+**[English](./README.en.md) · 中文**
 
-## Features
+> 在 DSH 的「设置 → 插件 → GitHub MCP」页展示 GitHub 示例用法，并显示你的公开仓库统计；同时提供模型工具 `gh_repo_stats`，可查当前账号仓库的星数、fork 与近 14 天克隆量。
 
-### ① Settings page "GitHub MCP"
-- **Public repos**: the browser fetches the GitHub public API directly (no token, safest) and shows your **public** repos' ⭐stars / 🍴forks / language; click to open the repo. The public API does not include private repos or clone counts.
-- **Try it like this**: a built-in **30-example pool**, showing **4 random** on open; a "shuffle" button re-picks 4; click an example to **copy** it to the clipboard.
+## 功能
 
-### ② Model tool `gh_repo_stats`
-- A host-registered model tool that reads `GITHUB_TOKEN` and returns **all** of the account's repos (including private) with stars, forks and **14-day clone counts**.
-- Usage: ask in the chat "how many stars/downloads do my repos have" and the model calls `gh_repo_stats`.
+### ① 设置页「GitHub MCP」
 
-> **Why split into "panel public data + chat-tool download counts"**: GitHub's public API lets you read public repos' stars/forks without a token (so the panel can use it and never leaks credentials); but **clone/download counts require auth**, and the token must stay on the Node host side (the browser must not hold it), so those come through the host-side model tool.
+- **公开仓库区**：浏览器直连 GitHub 公开 API（无 token、最安全），显示你的**公开**仓库的 ⭐星 / 🍴fork / 语言，点击跳转仓库。GitHub 公开 API 不含私有仓库与克隆量。
+- **试试这样用**：内置 **30 条示例池**，打开时随机取 **4 条**；点「换一批」再随机 4 条；点击示例即可**复制到剪贴板**。
 
-## Install
+### ② 模型工具 `gh_repo_stats`
 
-Via the DSH plugin manager from this repository:
+- 宿主注册的模型工具，读取 `GITHUB_TOKEN`，拉取当前账号**全部仓库（含私有）**的星数、fork 与**近 14 天克隆量**。
+- 用法：在对话里直接问「我的仓库有多少星多少下载」，模型会调用 `gh_repo_stats` 并展示。
+
+> **为什么拆成「面板公开数据 + 对话工具下载量」**：GitHub 公开 API 无需 token 就能读公开仓库的星/fork（所以面板可用、且不泄露凭证）；但**克隆/下载量必须鉴权**，而 token 只能留在 Node 宿主侧（浏览器不能持有），所以通过模型工具在宿主侧读取。
+
+## 安装
+
+通过 DSH 插件管理器，从本仓库安装：
 
 ```sh
 dsh plugin --profile <profile> add github:ZIye1208/dsh-github-mcp-hint
 ```
 
-Or add this repo as a local `link:` dependency in the profile's `package.json`, add it to `dsh.profile.bundles`, then restart DSH.
+或手动：把本仓库作为本地依赖加入 profile 的 `package.json`（`link:`），加入 `dsh.profile.bundles`，然后重启 DSH。
 
-## Prerequisite: wire up GitHub MCP + set a token
+## 前置：接入 GitHub MCP + 设置 token
 
-The examples and the tool depend on DSH being connected to GitHub MCP. Add to the profile's `cordis.patch.yml`:
+本插件的「示例」和「工具」依赖 DSH 已接入 GitHub MCP。在 profile 的 `cordis.patch.yml` 加入：
 
 ```yaml
 - insert:
@@ -41,13 +45,13 @@ The examples and the tool depend on DSH being connected to GitHub MCP. Add to th
         failOnStartupError: false
 ```
 
-Set `GITHUB_TOKEN` (a GitHub PAT with `repo` / `read:org` / `read:packages`), then restart DSH. GitHub tools appear as `mcp__github__*` (e.g. `mcp__github__list_pull_requests`, `mcp__github__create_pull_request`, `mcp__github__search_repositories`).
+并设置环境变量 `GITHUB_TOKEN`（GitHub PAT，需 `repo` / `read:org` / `read:packages`），然后重启 DSH。接入后 GitHub 工具以 `mcp__github__*` 形式出现（如 `mcp__github__list_pull_requests`、`mcp__github__create_pull_request`、`mcp__github__search_repositories`）。
 
-## Notes
+## 说明
 
-- The panel's "public repos" section uses a hardcoded `GITHUB_USERNAME` constant in the client (currently `ZIye1208`); change the source to target another account.
-- `gh_repo_stats` is not shown in the panel; call it from the chat. Use it if you want private repos or clone counts.
+- 面板的「公开仓库区」用的用户名是写死在客户端里的 `GITHUB_USERNAME` 常量（当前为 `ZIye1208`），改源码即可适配其它账号。
+- `gh_repo_stats` 不在面板展示，只在对话里调用；若要含私有仓库或克隆量，用它。
 
-## License
+## 许可
 
 [MIT](./LICENSE)
