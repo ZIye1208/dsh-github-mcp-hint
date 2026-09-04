@@ -18,6 +18,8 @@ A DSH plugin that adds a **Settings → Plugins → GitHub MCP** page (public re
 
 ## Install
 
+> Note: DSH adds only **top-level dependencies** to a profile's bundles layer, so this panel plugin must be **explicitly** installed via one of the ways below to appear in "Settings → Plugins → GitHub MCP"; merely being carried as a dependency of `dsh-github-mcp` does **not** show it automatically.
+
 ### npm (recommended, published to npmjs)
 
 ```sh
