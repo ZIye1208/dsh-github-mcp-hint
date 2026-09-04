@@ -55,6 +55,19 @@ dsh plugin --profile web add github:ZIye1208/dsh-github-mcp-hint
 - 面板的「公开仓库区」使用页面上的「GitHub 用户名」输入框查询公开仓库，并用 `localStorage` 记住上次输入，无需改源码即可适配其它账号。
 - `gh_repo_stats` 不在面板展示，只在对话里调用；若要含私有仓库或克隆量，用它。
 
+## 更新日志
+
+### v0.2.0
+- `gh_repo_stats`：并发拉取克隆量（限 5 并发），标注「共 N 个 / 仅列前 30」，区分 429 限流 / 无权限 / 无数据。
+- 新增 `gh_current_user` 模型工具：返回当前 token 对应的 GitHub 账号。
+- 示例池逐条标注写操作（UI 显示 ⚠️）。
+- 面板状态区增加 `mcp__github__*` 未出现时的排查指引（先 `github_token_status` 再重启）。
+- 剪贴板增加 `execCommand('copy')` 兜底。
+- 用户名输入框提示可用 `gh_current_user` 查询当前账号。
+
+### v0.1.0
+- 初次发布：设置页「GitHub MCP」+ 示例池 + 公开仓库统计 + `gh_repo_stats`。
+
 ## 许可
 
 [MIT](./LICENSE)
