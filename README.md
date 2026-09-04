@@ -23,7 +23,13 @@
 
 ## 安装
 
-通过 DSH 插件管理器，从本仓库安装：
+### 方式一：npm（推荐，已发布到 npmjs）
+
+```sh
+dsh plugin --profile web add dsh-github-mcp-hint
+```
+
+### 方式二：GitHub（备选）
 
 ```sh
 dsh plugin --profile web add github:ZIye1208/dsh-github-mcp-hint

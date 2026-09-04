@@ -35,5 +35,9 @@
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZIye1208/dsh-github-mcp-hint.git"
+  },
   "license": "MIT"
 }

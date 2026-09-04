@@ -18,7 +18,13 @@ A DSH plugin that adds a **Settings → Plugins → GitHub MCP** page (public re
 
 ## Install
 
-Via the DSH plugin manager from this repository:
+### npm (recommended, published to npmjs)
+
+```sh
+dsh plugin --profile web add dsh-github-mcp-hint
+```
+
+### GitHub (alternative)
 
 ```sh
 dsh plugin --profile web add github:ZIye1208/dsh-github-mcp-hint
