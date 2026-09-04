@@ -25,7 +25,7 @@
 通过 DSH 插件管理器，从本仓库安装：
 
 ```sh
-dsh plugin --profile <profile> add github:ZIye1208/dsh-github-mcp-hint
+dsh plugin --profile web add github:ZIye1208/dsh-github-mcp-hint
 ```
 
 或手动：把本仓库作为本地依赖加入 profile 的 `package.json`（`link:`），加入 `dsh.profile.bundles`，然后重启 DSH。

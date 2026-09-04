@@ -21,7 +21,7 @@ A DSH plugin that adds a **Settings → Plugins → GitHub MCP** page (public re
 Via the DSH plugin manager from this repository:
 
 ```sh
-dsh plugin --profile <profile> add github:ZIye1208/dsh-github-mcp-hint
+dsh plugin --profile web add github:ZIye1208/dsh-github-mcp-hint
 ```
 
 Or add this repo as a local `link:` dependency in the profile's `package.json`, add it to `dsh.profile.bundles`, then restart DSH.
